@@ -74,7 +74,10 @@ def dataclass(clz: type):
   Returns:
     The new class.
   """
-  data_clz = dataclasses.dataclass(frozen=True)(clz)
+  if dataclasses.is_dataclass(clz):
+    data_clz = clz
+  else:
+    data_clz = dataclasses.dataclass(frozen=True)(clz)
   meta_fields = []
   data_fields = []
   for name, field_info in data_clz.__dataclass_fields__.items():
